@@ -146,7 +146,7 @@ public class Init {
             Scheduler();
         }
 
-        for (Pcb p : existingPcb) {
+        for (Pcb p : existingPcb) {     //判断进程是否已存在
             if (p.getPID().equals(PID)) {
                 System.out.println("Process is exist.");
                 return false;
