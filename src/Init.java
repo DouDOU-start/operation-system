@@ -109,6 +109,7 @@ public class Init {
         System.out.println("-cr" + "     " + "create <pid> <priority>");
         System.out.println("-req" + "    " + "request <resource> <number>");
         System.out.println("-rel" + "    " + "release <resource> <number>");
+        System.out.println("-de" + "     " + "delete <pid>");
         System.out.println("-to" + "     " + "timeout");
         System.out.println("-lps" + "    " + "list all processes and their status");
         System.out.println("-lrs" + "    " + "list all resources and their status");
@@ -137,12 +138,19 @@ public class Init {
      * @param priority      创建新进程的优先级
      * @return              返回当前进程
      */
-    public void cr(String PID, int priority) {
+    public Boolean cr(String PID, int priority) {
 
         if (priority < 0 || priority > 2) {     //进程优先级限制
             System.out.println("Process creation failed!");
             System.out.println("Priority can only be 0, 1, 2");
             Scheduler();
+        }
+
+        for (Pcb p : existingPcb) {
+            if (p.getPID().equals(PID)) {
+                System.out.println("Process is exist.");
+                return false;
+            }
         }
 
         Pcb pcb = new Pcb(PID, priority);   //创建新进程
@@ -171,6 +179,8 @@ public class Init {
         }
 
 //        Scheduler();
+
+        return true;
 
     }
 
